@@ -20,7 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            // 'auth' => \App\Http\Middleware\Authenticate::class,
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+
             "AuthenticatedUser" => Authenticated::class,
             "Admin" => CheckAdminRole::class,
             "Accountant" => CheckAccountantRole::class,
@@ -28,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
             "Maintenance" => CheckMaintenanceRole::class,
             "Mentor" => CheckMentorRole::class,
             "StorageKeeper" => CheckStorageKeeperRole::class,
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

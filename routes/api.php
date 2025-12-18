@@ -30,7 +30,7 @@ Route::prefix("std")->group(function () {
 Route::group(["middleware" => "auth:employee"] , function () {
 
 // Admin Routes ::
-    Route::group(["middleware" => "auth:admin" , "prefix" => "admin"] , function () {
+    Route::group(["middleware" => "role:admin" , "prefix" => "admin"] , function () {
         Route::group(["prefix" => "management"] , function () {
             Route::get("employees" , [EmployeeManagementController::class , "getEmployees"]);
             Route::get("roles" , [EmployeeManagementController::class , "getRoles"]);
@@ -51,7 +51,7 @@ Route::group(["middleware" => "auth:employee"] , function () {
     });
 
 // Mentor Routes ::
-    Route::group(["auth:mentor"] , function () {
+    Route::group(["middleware" => "role:mentor" , "prefix" => "mentor"] , function () {
 
     });
 
