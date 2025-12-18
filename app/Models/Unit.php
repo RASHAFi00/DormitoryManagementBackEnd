@@ -21,4 +21,12 @@ class Unit extends Model
     public function employee() {
         return $this->hasMany(Employee::class , "unit_id" , "id");
     }
+
+    public function room() {
+        return $this->hasMany(Room::class , "unit_id" , "id");
+    }
+
+    public function storage() {
+        return $this->hasMany(Storage::class , "unit_id" , "id");
+    }
 }

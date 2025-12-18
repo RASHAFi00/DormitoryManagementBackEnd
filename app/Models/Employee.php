@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Spatie\Permission\Models\Role;
+
 class Employee extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -44,6 +46,10 @@ class Employee extends Authenticatable
 
     public function unit() {
         return $this->belongsTo(Unit::class , "unit_id" , "id");
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 
 }

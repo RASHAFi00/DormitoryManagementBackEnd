@@ -12,12 +12,14 @@ return new class extends Migration
         Schema::create('maintenance_requests', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("room_id")->nullable();
-            $table->unsignedBigInteger("unit_manager_id")->nullable();
             // these two must be handled in controller where the ids must exist in their respective tables
+            $table->unsignedBigInteger("unit_id")->nullable()->default(null);
+            $table->unsignedBigInteger("room_id")->nullable()->default(null);
+            $table->unsignedBigInteger("unit_manager_id")->nullable()->default(null);
+            //
 
             $table->boolean("agreed")->default(false);
-            $table->text("description")->nullable();
+            $table->text("description")->nullable()->default(null);
             $table->timestamps();
         });
     }
