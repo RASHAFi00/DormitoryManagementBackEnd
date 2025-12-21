@@ -17,4 +17,8 @@ class Room extends Model
     public function unit() {
         return $this->belongsTo(Unit::class , "unit_id" , "id");
     }
+
+    public function student() {
+        return $this->belongsToMany(Student::class , "assignment" , "room_id" , "student_id");
+    }
 }

@@ -7,28 +7,15 @@ use Illuminate\Http\Request;
 
 use App\Models\Unit;
 
-use App\Http\Requests\admin\UnitCapRequest;
 
-use App\Http\Resources\admin\units\UnitResource;
-use App\Http\Resources\admin\units\UnitRoomResource;
-use App\Http\Resources\admin\units\UnitStorageResource;
+use App\Http\Resources\open\UnitResource;
+use App\Http\Resources\open\UnitRoomResource;
+use App\Http\Resources\open\UnitStorageResource;
 
 
 
 class UnitManagementController extends Controller
 {
-    public function getUnitData() {
-        return UnitResource::collection(Unit::all());
-    }
-
-    public function getUnitStorage(Unit $unit) {
-        return UnitStorageResource::collection($unit->with("storage"));
-    }
-
-    public function getUnitRooms(Unit $unit) {
-        return UnitRoomResource::collection($unit->with("room"));
-    }
-
     public function setUnitRoomCap(Unit $unit , Request $request) {
         $validated = $request->validate([
             "roomCap" => ["required" , "numeric" , "min:1"]

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("unit_id")->constrained();
             $table->integer("number");
-            $table->enum("status" , ["full" , "empty" , "under maintenance"]);
+            $table->enum("state" , ["full" , "empty" , "under maintenance"]);
             $table->timestamps();
         });
     }

@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\auth\authController;
 use App\Http\Controllers\api\auth\studentAuthController;
 
+// Open Controller Classes ::
+use App\Http\Controllers\api\open\UnitController;
+
 // Admin Controller Classes ::
 use App\Http\Controllers\api\admin\EmployeeManagementController;
 use App\Http\Controllers\api\admin\MaintenanceManagementController;
@@ -42,9 +45,10 @@ Route::group(["middleware" => "auth:employee"] , function () {
             Route::post("{mRequest}/agree" , [MaintenanceManagementController::class , "agreeMaintenanceRequest"]);
         });
         Route::group(["prefix" => "units"] , function () {
-            Route::get("/all" , [UnitManagementController::class , "getUnitData"]);
-            Route::get("/{unit}/storage" , [UnitManagementController::class , "getUnitStorage"]);
-            Route::get("/{unit}/rooms" , [UnitManagementController::class , "getUnitRooms"]);
+            Route::get("/all" , [UnitController::class , "getUnitData"]);
+            Route::get("/{unit}/storage" , [UnitController::class , "getUnitStorage"]);
+            Route::get("/{unit}/rooms" , [UnitController::class , "getUnitRooms"]);
+            
             Route::post("/{unit}/roomcap" , [UnitManagementController::class , "setUnitRoomCap"]);
             Route::post("/{unit}/gender" , [UnitManagementController::class , "setUnitGender"]);
         });

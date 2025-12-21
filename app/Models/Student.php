@@ -45,4 +45,8 @@ class Student extends Authenticatable
             }
         } );
     }
+
+    public function room() {
+        return $this->belongsToMany(Room::class , "assignment" , "student_id" , "room_id");
+    }
 }
