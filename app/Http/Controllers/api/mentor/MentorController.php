@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Models\Room;
+use App\Models\MaintenanceRequest;
+use App\Models\Fee;
 
 use App\Http\Requests\mentor\MaintenanceRequestRequest;
+use App\Http\Requests\mentor\FeeRequest;
 
-class MultiController extends Controller
+class MentorController extends Controller
 {
     public function setRoomState(Room $room , Request $request) {
         $validated = $request->validate([
@@ -32,7 +35,19 @@ class MultiController extends Controller
         ] , 200);
     }
 
-    public function sendMaintenanceRequest(Room $room , MaintenanceRequestRequest $request) {
+    public function sendMaintenanceRequest(MaintenanceRequestRequest $request) {
+        MaintenanceRequest::query()->create($request->validated());
 
+        return response()->json([
+            "message" => "maintenance request sent succesfully"
+        ] , 200);
+    }
+
+    public function sendFeeRequest(FeeRequest $request) {
+        Fee::query()->create($request->validated());
+
+        return response()->json([
+            "message" => "fee request sent succesfully"
+        ] , 200);
     }
 }

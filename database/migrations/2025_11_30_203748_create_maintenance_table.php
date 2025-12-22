@@ -11,12 +11,12 @@ return new class extends Migration
         Schema::create('maintenance', function (Blueprint $table) {
             $table->id();
             $table->foreignId("maintenance_request_id")->nullable()->constrained()->onUpdate("cascade")->onDelete("set null");
-            $table->integer("cost")->check("cost > 0")->nullable()->default(null);
+            $table->foreignId("treasury_id")->nullable()->constrained()->onUpdate("cascade")->onDelete("set null");
             $table->text("description")->nullable();
-            $table->enum("status" , ["in queue" , "pending" , "finished" , "paused" , "interrupted" , "cancled"]);
-            $table->timestamps();
+            $table->enum("status" , ["in queue" , "pending" , "finished" , "paused" , "interrupted" , "cancled"])->default("in queue");
             $table->timestamp("start_date")->nullable()->default(null);
             $table->timestamp("finish_date")->nullable()->default(null);
+            $table->timestamps();
         });
     }
 

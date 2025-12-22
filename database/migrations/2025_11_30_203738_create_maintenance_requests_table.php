@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger("unit_id")->nullable()->default(null);
             $table->unsignedBigInteger("room_id")->nullable()->default(null);
             $table->unsignedBigInteger("unit_manager_id")->nullable()->default(null);
-            //
-
+            $table->double("cost")->check("cost > 0");
             $table->boolean("agreed")->default(false);
+            $table->boolean("funded")->default(false);
             $table->text("description")->nullable()->default(null);
             $table->timestamps();
         });

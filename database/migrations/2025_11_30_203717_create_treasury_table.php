@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::create('treasury', function (Blueprint $table) {
             $table->id();
-            $table->boolean("income")->default(false);
-            $table->foreignId("fee_id")->nullable()->constrained()->onDelete("set null");
-            $table->text("description")->nullable()->default(null);
             $table->foreignId("employee_id")->nullable()->constrained()->onDelete("set null");
+            $table->boolean("income")->default(false);
+            $table->double("amount");
+            $table->text("description")->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -10,11 +10,13 @@ return new class extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->enum("type" , ["registeration" , "damage" , "punishment" , "maintenance"]);
-            $table->integer("amount")->check("amount > 0");
-            $table->timestamp("created_at");
-            $table->timestamp("payment_date")->nullable()->default(null);
+            $table->foreignId("student_id")->constrained()->onUpdate("cascade");
+            $table->foreignId("treasury_id")->nullable()->constrained()->onUpdate("cascade")->onDelete("set null")->default(null);
+            $table->enum("type" , ["registeration" , "punishment"]);
+            $table->integer("cost")->check("amount > 0");
             $table->string("process_number")->nullable()->unique()->default(null);
+            $table->boolean("paid")->default(false);
+            $table->timestamps();
         });
     }
 

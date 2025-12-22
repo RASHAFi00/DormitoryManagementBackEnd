@@ -31,7 +31,7 @@ class registerRequest extends FormRequest
             "email" => ["required", "email"],
             "password" => ["required", "min:8", "max:32"],
             "specialization" => ["required", "string"],
-            "unit_id" => ["required", "numeric", Rule::exists("units", "id")]
+            "unit_id" => ["present" , "nullable" , "numeric", Rule::exists("units", "id")]
         ];
     }
 }

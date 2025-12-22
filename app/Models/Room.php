@@ -21,4 +21,6 @@ class Room extends Model
     public function student() {
         return $this->belongsToMany(Student::class , "assignment" , "room_id" , "student_id");
     }
+
+    
 }

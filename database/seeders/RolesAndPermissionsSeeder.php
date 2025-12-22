@@ -12,7 +12,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
     public function run(): void
     {
-        $admin = Role::create(["name" => "Admin"]);
+        $admin = Role::create(["name" => "admin"]);
         $itOffice = Role::create(["name" => "itOffice"]);
         $accountant = Role::create(["name" => "accountant"]);
         $mentor = Role::create(["name" => "mentor"]);

@@ -26,7 +26,7 @@ class authController extends Controller
         $token = $newEmployee->createToken("API")->plainTextToken;
 
         return response()->json([
-            "newEmployee" => RegisteredEmployeeResource::make($newEmployee),
+            "employee" => RegisteredEmployeeResource::make($newEmployee),
             "token" => $token
         ]);
     }
