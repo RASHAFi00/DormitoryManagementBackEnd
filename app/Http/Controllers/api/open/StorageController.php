@@ -10,12 +10,18 @@ use App\Models\Unit;
 use App\Models\Storage;
 
 use App\Http\Resources\open\StorageResource;
+use App\Http\Resources\open\UnitResource;
 
 class StorageController extends Controller
 {
     public function getUnitStorageData(Request $request) {
-        $storage = $request->user("employee")->load("unit.storage")->unit->flatMap->storage;
-        return StorageResource::collection($storage);
+        $unit = $request->user("employee")->load("unit")->unit->flatMap;
+        $storage = $unit->load("storage")->storage;
+        // return StorageResource::collection($storage);
+        return response()->json([
+            "unit" => UnitResource::make($unit),
+            "storage" => StorageResource::collection($storage)
+        ]);
     }
 
     public function getUnitStorageDataGlobal(Request $request) {
@@ -29,6 +35,13 @@ class StorageController extends Controller
             ] , 404);
         }
 
-        return StorageResource::collection(Storage::where("unit_id" , $validated["unitId"]));
+        $unit = Unit::find($validated["unitId"]);
+        $storage = $unit->load("storage")->storage;
+
+        // return StorageResource::collection(Storage::where("unit_id" , $validated["unitId"]));
+        return response()->json([
+            "unit" => UnitResource::make(Unit::find($validated["unitId"])),
+            "storage" => StorageResource::collection($storage)
+        ]);
     }
 }

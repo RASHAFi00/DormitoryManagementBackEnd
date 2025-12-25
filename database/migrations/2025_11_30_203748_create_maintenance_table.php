@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('maintenance', function (Blueprint $table) {
             $table->id();
             $table->foreignId("maintenance_request_id")->nullable()->constrained()->onUpdate("cascade")->onDelete("set null");
+            $table->unsignedBigInteger("unit_id")->nullable()->default(null);
+            $table->unsignedBigInteger("room_id")->nullable()->default(null);
             $table->foreignId("treasury_id")->nullable()->constrained("treasury")->onUpdate("cascade")->onDelete("set null");
             $table->text("description")->nullable();
             $table->enum("status" , ["in queue" , "pending" , "finished" , "paused" , "interrupted" , "cancled"])->default("in queue");

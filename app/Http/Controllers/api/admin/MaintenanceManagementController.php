@@ -11,7 +11,9 @@ use App\Models\MaintenanceRequest;
 use App\Models\Maintenance;
 
 use App\Http\Resources\admin\MaintenanceRequestResource;
-use App\Http\Resources\admin\MaintenanceProgressResource;
+
+// use App\Http\Resources\admin\MaintenanceProgressResource;
+use App\Http\Resources\open\MaintenanceResource as MaintenanceProgressResource;
 
 class MaintenanceManagementController extends Controller
 {

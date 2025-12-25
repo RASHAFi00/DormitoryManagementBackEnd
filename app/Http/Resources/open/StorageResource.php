@@ -17,8 +17,7 @@ class StorageResource extends JsonResource
     public function toArray(Request $request): array
     {
         // return parent::toArray($request);
-        return [
-            "unit" => UnitResource::make(Unit::find($this->unit_id)),
+        return [ 
             "itemName" => $this->item_name,
             "quantity" => $this->quantity,
             "createdAt" => $this->created_at,

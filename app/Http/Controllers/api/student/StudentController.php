@@ -20,7 +20,7 @@ class StudentController extends Controller
 
     public function housing(Request $request)
     {
-        $exists = $request->user("student")->housingRequest1;
+        $exists = $request->user("student")->housingRequest1()->housingRequest1;
         if (! $exists) {
             return response()->json(["message" => "clear to send housing request"], 200);
         }
@@ -58,7 +58,7 @@ class StudentController extends Controller
     }
 
     public function sendHousingRequest(HousingRequestRequest $hRequest , Request $request) {
-        $exists = $request->user("student")->housingRequest1;
+        $exists = $request->user("student")->housingRequest1()->housingRequest1;
         if ($exists) {
             return response()->json(["message" => "student already have housing request in queue"], 422);
         }
@@ -100,7 +100,8 @@ class StudentController extends Controller
                 "info" => collect($oneRelationArray)->map(function ($valid , $student){
                     if(! $valid){
                         $ID = Student::find($student)->identification;
-                        return $ID . " is currently a roommate with other students";
+                        $array[] = $ID;
+                        return (string)$ID . " is currently a roommate with other students";
                     }
                 }),
                 "array" => $array

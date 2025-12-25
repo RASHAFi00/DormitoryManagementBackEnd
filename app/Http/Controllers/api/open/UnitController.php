@@ -18,7 +18,10 @@ class UnitController extends Controller
     }
 
     public function getUnitStorage(Unit $unit) {
-        return StorageResource::collection($unit->storage);
+        return response()->json([
+            "unit" => UnitResource::make($unit),
+            "storage" => StorageResource::collection($unit->load("storage")->storage)
+        ]);
     }
 
     public function getUnitRooms(Unit $unit) {

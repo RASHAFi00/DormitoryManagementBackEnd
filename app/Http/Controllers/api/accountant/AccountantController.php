@@ -69,6 +69,8 @@ class AccountantController extends Controller
 
         Maintenance::query()->create([
             "maintenance_request_id" => $mRequest->id,
+            "unit_id" => $mRequest->unit_id ?? null,
+            "room_id" => $mRequest->room_id ?? null,
             "treasury_id" => $treasuryLog->id,
             "description" => $mRequest->description,
         ]);

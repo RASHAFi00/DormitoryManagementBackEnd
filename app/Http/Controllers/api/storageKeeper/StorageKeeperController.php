@@ -34,6 +34,7 @@ class StorageKeeperController extends Controller
 
         return response()->json([
             "message" => "successfully inserted new item",
+            "unitId" => $unit,
             "itemInfo" => StorageResource::make($item)
         ] , 200);
     }

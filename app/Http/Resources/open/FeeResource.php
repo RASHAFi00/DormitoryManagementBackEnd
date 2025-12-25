@@ -19,8 +19,8 @@ class FeeResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            "student" => StudentResource::make(Student::find($this->student_id)),
-            "treasury" => TreasuryResource::make(Treasury::find($this->treasury_id)),
+            "student" => StudentResource::make($this->load("student")),
+            "treasury" => TreasuryResource::make($this->load("treasury")),
             "type" => $this->type,
             "cost" => $this->cost,
             "processNumber" => $this->process_number,

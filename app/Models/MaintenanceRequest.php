@@ -25,6 +25,6 @@ class MaintenanceRequest extends Model
 
     public function maintenance() {
         return $this->hasOne(Maintenance::class , "maintenance_request_id" , "id");
-    }
+    } 
 
 }

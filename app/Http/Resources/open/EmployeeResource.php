@@ -32,6 +32,7 @@ class EmployeeResource extends JsonResource
 
             // "roles" => RoleResource::collection($this->role),
             "roles" => $this->role ? RoleResource::collection($this->role) : null,
+
             "createdAt" => $this->created_at
         ];
     }
