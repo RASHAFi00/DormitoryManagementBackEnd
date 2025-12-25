@@ -12,7 +12,8 @@ use App\Models\Employee;
 use App\Http\Requests\auth\registerRequest;
 use App\Http\Requests\auth\loginRequest;
 
-use App\Http\Resources\open\EmployeeResource;
+use App\Http\Resources\admin\EmployeeResource;
+use App\Http\Resources\open\EmployeeResource as RegisteredEmployeeResource;
 
 
 class authController extends Controller
@@ -24,6 +25,7 @@ class authController extends Controller
 
         return response()->json([
             "employee" => EmployeeResource::make($newEmployee),
+            "role" => $newEmployee->role()->get(),
             "token" => $token
         ]);
     }
@@ -43,7 +45,7 @@ class authController extends Controller
 
         return response()->json([
             "token" => $token,
-            "employee" => EmployeeResource::make($employee),
+            "employee" => RegisteredEmployeeResource::make($employee),
         ]);
     }
 

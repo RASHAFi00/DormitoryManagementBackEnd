@@ -21,7 +21,6 @@ class EmployeeResource extends JsonResource
             "email" =>  $this->email,
             "specialization" => $this->specialization,
             "unitId" => $this->unit_id,
-            "role" => $this->whenLoaded("role" , fn() => $this->role->name)
         ];
     }
 }

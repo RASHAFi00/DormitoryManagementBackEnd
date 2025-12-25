@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\admin\ValidRoleRequest;
 
-use App\Http\Resources\admin\EmployeeResource;
+use App\Http\Resources\open\EmployeeResource;
 use App\Http\Resources\open\RoleResource;
 
 use App\Models\Employee;

@@ -26,8 +26,12 @@ class EmployeeResource extends JsonResource
             "email" => $this->email,
             "specialization" => $this->specialization,
             "leaveDate" => $this->leave_date,
-            "unit" => UnitResource::make(Unit::find($this->unit_id)),
-            "roles" => RoleResource::collection($this->role),
+
+            // "unit" => UnitResource::make(Unit::find($this->unit_id)),
+            "unit" => $this->unit ? UnitResource::make($this->unit) : null,
+
+            // "roles" => RoleResource::collection($this->role),
+            "roles" => $this->role ? RoleResource::collection($this->role) : null,
             "createdAt" => $this->created_at
         ];
     }
