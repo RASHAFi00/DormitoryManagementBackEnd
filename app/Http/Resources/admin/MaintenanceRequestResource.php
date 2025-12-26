@@ -20,6 +20,7 @@ class MaintenanceRequestResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            "id" => $this->id,
             "unitId" => $this->unit_id,
             "unitName" => $this->unit_name,
             "roomId" => $this->room_id,

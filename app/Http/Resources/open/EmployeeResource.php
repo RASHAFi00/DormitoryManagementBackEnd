@@ -5,8 +5,6 @@ namespace App\Http\Resources\open;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Models\Unit;
-
 class EmployeeResource extends JsonResource
 {
     /**
@@ -18,6 +16,7 @@ class EmployeeResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            "id" => $this->id,
             "firstName" => $this->first_name,
             "lastName" => $this->last_name,
             "age" => $this->age,
@@ -28,10 +27,10 @@ class EmployeeResource extends JsonResource
             "leaveDate" => $this->leave_date,
 
             // "unit" => UnitResource::make(Unit::find($this->unit_id)),
-            "unit" => $this->unit ? UnitResource::make($this->unit) : null,
+            "unit" => $this->unit ? UnitResource::make($this->load("unit")->unit->flatMap) : null,
 
             // "roles" => RoleResource::collection($this->role),
-            "roles" => $this->role ? RoleResource::collection($this->role) : null,
+            "roles" => $this->role ? RoleResource::collection($this->load("role")->role) : null,
 
             "createdAt" => $this->created_at
         ];

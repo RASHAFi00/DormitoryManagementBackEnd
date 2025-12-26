@@ -19,6 +19,7 @@ class FeeResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            "id" => $this->id,
             "student" => StudentResource::make($this->load("student")),
             "treasury" => TreasuryResource::make($this->load("treasury")),
             "type" => $this->type,

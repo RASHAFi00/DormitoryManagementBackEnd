@@ -14,6 +14,7 @@ return new class extends Migration
             $table->enum('gender', ['males', 'females'])->default('males');
             $table->tinyInteger("room_cap")->default(3);
             $table->integer("room_count");
+            $table->string("specialization");
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ class TreasuryResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            "id" => $this->id,
             "transaction" => $this->income == true ? "income" : "spendings",
             "amount" => $this->amount,
             "description" => $this->description,

@@ -16,6 +16,7 @@ class RoomResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            "id" => $this->id,
             "unitId" => $this->unit_id,
             "number" => $this->number,
             "state" => $this->state,

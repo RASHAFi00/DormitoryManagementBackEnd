@@ -18,6 +18,7 @@ class HousingRequestResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            "id" => $this->id,
             "createdAt" => $this->created_at,
             "signedBy" => StudentTinyResource::make($this->load("student1")),
             "roommate1" => StudentTinyResource::make($this->load("student2")),

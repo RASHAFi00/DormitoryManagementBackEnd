@@ -25,6 +25,7 @@ class MaintenanceResource extends JsonResource
         $treasury = $this->load("treasury");
 
         return [
+            "id" => $this->id,
             "unit" => UnitResource::make($unit),
             "room" => RoomResource::make($room),
             "unitManager" => EmployeeResource::make($unitManager),
