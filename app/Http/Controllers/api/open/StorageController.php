@@ -15,12 +15,11 @@ use App\Http\Resources\open\UnitResource;
 class StorageController extends Controller
 {
     public function getUnitStorageData(Request $request) {
-        $unit = $request->user("employee")->load("unit")->unit->flatMap;
-        $storage = $unit->load("storage")->storage;
+        $data = $request->user("employee")->load("unit.storage")->unit->flatMap;
         // return StorageResource::collection($storage);
         return response()->json([
-            "unit" => UnitResource::make($unit),
-            "storage" => StorageResource::collection($storage)
+            "unit" => UnitResource::make($data),
+            "storage" => StorageResource::collection($data->storage)
         ]);
     }
 
@@ -31,7 +30,7 @@ class StorageController extends Controller
 
         if(! $validated){
             return response()->json([
-                "message" => "unit not found"
+                "message" => "unit id is invalid or not found"
             ] , 404);
         }
 
@@ -40,7 +39,7 @@ class StorageController extends Controller
 
         // return StorageResource::collection(Storage::where("unit_id" , $validated["unitId"]));
         return response()->json([
-            "unit" => UnitResource::make(Unit::find($validated["unitId"])),
+            "unit" => UnitResource::make($unit),
             "storage" => StorageResource::collection($storage)
         ]);
     }

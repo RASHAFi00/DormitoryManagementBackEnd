@@ -14,7 +14,15 @@ class UnitResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // No Edit Needed
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "gender" => $this->gender,
+            "roomCount" => $this->room_count,
+            "roomCap" => $this->room_cap,
+            "specialization" => $this->specialization
+        ];
+
     }
 }
