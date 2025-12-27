@@ -64,8 +64,5 @@ class DatabaseSeeder extends Seeder
         Student::factory(50)->create();
         echo "\033[32msuccessfully\033[0m created \033[36m50\033[0m student records\n";
 
-        // Employee::query()->update(["password" => bcrypt("password")]);
-        // Student::query()->update(["password" => bcrypt("password")]);
-
     }
 }

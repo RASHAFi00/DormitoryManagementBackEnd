@@ -17,9 +17,23 @@ use App\Http\Resources\student\StudentResource;
 
 class studentAuthController extends Controller
 {
-    public function register(StudentRegisterRequest $request){
+    public function register(StudentRegisterRequest $request)
+    {
 
-        $newStudent = Student::query()->create($request->validated());
+        $newStudent = Student::query()->create(
+            [
+                "first_name" => $request->validated("firstName"),
+                "last_name" => $request->validated("lastName"),
+                "age" => $request->validated("age"),
+                "country" => $request->validated("country"),
+                "mobile" => $request->validated("mobile"),
+                "email" => $request->validated("email"),
+                "password" => $request->validated("password"),
+                "specialization" => $request->validated("specialization"),
+                "year_of_study" => $request->validated("yearOfStudy"),
+            ]
+        );
+
         $token = $newStudent->createToken("SAPI")->plainTextToken;
 
         return response()->json([
@@ -28,20 +42,21 @@ class studentAuthController extends Controller
         ]);
     }
 
-    public function login(StudentLoginRequest $request){
+    public function login(StudentLoginRequest $request)
+    {
 
-        $credentials = $request->only("email" , "password");
+        $credentials = $request->only("email", "password");
 
         $student = Auth::guard("student")->getProvider()->retrieveByCredentials(["email" => $credentials["email"]]);
-        if(! $student){
+        if (! $student) {
             return response()->json([
                 "message" => "email not found"
-            ] , 404);
+            ], 404);
         }
-        if(! Hash::check($credentials["password"] , $student->password)){
+        if (! Hash::check($credentials["password"], $student->password)) {
             return response()->json([
                 "message" => "invalid password"
-            ] , 422);
+            ], 422);
         }
 
         $token = $student->createToken("API")->plainTextToken;
@@ -52,7 +67,8 @@ class studentAuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $student = $request->user("student");
 
         $student->tokens()->delete();

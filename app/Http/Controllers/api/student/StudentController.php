@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\student\HousingRequestRequest;
+use App\Http\Resources\open\FeeResource;
 use App\Models\HousingRequest;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -32,7 +33,8 @@ class StudentController extends Controller
     }
 
     public function getFeeLog(Request $request) {
-        return $request->user("student")->fee()->where("paid" , false)->latest()->paginate(15);
+        $fees = $request->user("student")->load(["fees" => function($q) {$q->where("paid" , false);}])->fees;
+        return FeeResource::collection($fees);
     }
 
     public function getRoommateRelation(Request $request) {

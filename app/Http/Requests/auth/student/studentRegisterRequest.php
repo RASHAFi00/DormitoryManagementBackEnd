@@ -3,6 +3,7 @@
 namespace App\Http\Requests\auth\student;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StudentRegisterRequest extends FormRequest
 {
@@ -24,6 +25,7 @@ class StudentRegisterRequest extends FormRequest
         return [
             "firstName" => ["required", "string", "min:3", "max:32"],
             "lastName" => ["required", "string", "min:3", "max:32"],
+            "age" => ["required" , "numeric" , "min:1"],
             "country" => ["required" , "string"],
             "mobile" => ["present", "nullable", "string"],
             "email" => ["required", "email"],

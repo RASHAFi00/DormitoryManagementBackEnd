@@ -21,6 +21,7 @@ class Student extends Authenticatable
     protected $fillable = [
         "first_name",
         "last_name",
+        "age",
         "country",
         "mobile",
         "email",
@@ -52,7 +53,7 @@ class Student extends Authenticatable
                 $student->eligible = false;
             }
             if(empty($student->house_in)){
-                $student->house_id = false;
+                $student->house_in = false;
             }
         } );
     }
