@@ -59,7 +59,6 @@ class studentAuthController extends Controller
 
         return response()->json([
             "message" => "logout successful",
-            "student" => $student
         ]);
     }
 }

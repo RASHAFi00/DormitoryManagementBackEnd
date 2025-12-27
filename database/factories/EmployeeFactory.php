@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Hash;
  */
 class EmployeeFactory extends Factory
 {
-    protected static $password = null;
-
     /**
      * Define the model's default state.
      *
