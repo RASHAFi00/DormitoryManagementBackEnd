@@ -26,7 +26,7 @@ class EmployeeFactory extends Factory
             "address" => fake()->address(),
             "mobile" => "09" . fake()->unique()->randomNumber(8),
             "email" => fake()->unique()->email(),
-            "password" => bcrypt('password'),
+            "password" => "password",
             "specialization" => fake()->jobTitle(),
             "leave_date" => null,
         ];

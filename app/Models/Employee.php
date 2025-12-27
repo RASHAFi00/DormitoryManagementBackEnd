@@ -49,8 +49,8 @@ class Employee extends Authenticatable
         return $this->hasMany(Treasury::class, "employee_id" , "id");
     }
 
-    public function role() {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role() {
+    //     return $this->hasMany(Role::class);
+    // }
 
 }

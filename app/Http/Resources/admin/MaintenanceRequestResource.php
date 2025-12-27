@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Models\Employee;
 
-use App\Http\Resources\global\UnitManagerResource;
+use App\Http\Resources\open\EmployeeResource;
 
 class MaintenanceRequestResource extends JsonResource
 {

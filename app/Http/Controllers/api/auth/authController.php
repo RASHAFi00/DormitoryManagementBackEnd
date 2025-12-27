@@ -24,7 +24,6 @@ class authController extends Controller
 
         return response()->json([
             "employee" => EmployeeResource::make($newEmployee),
-            "role" => $newEmployee->role()->get(),
             "token" => $token
         ]);
     }
@@ -45,11 +44,12 @@ class authController extends Controller
             ] , 422);
         }
 
+        // $employee->load(["unit" , "role"]);
         $token = $employee->createToken("API")->plainTextToken;
 
         return response()->json([
             "token" => $token,
-            "employee" => EmployeeResource::make($employee),
+            "employee" => EmployeeResource::make($employee->load(["unit" , "roles"])),
         ]);
     }
 

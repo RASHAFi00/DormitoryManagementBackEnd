@@ -17,7 +17,7 @@ class EmployeeManagementController extends Controller
 {
     public function getEmployees()
     {
-        return EmployeeResource::collection(Employee::all());
+        return EmployeeResource::collection(Employee::with(["unit" , "roles"])->get());
     }
 
     public function getRoles()
@@ -27,7 +27,7 @@ class EmployeeManagementController extends Controller
 
     public function assignRole(Employee $employee, ValidRoleRequest $request)
     {
-        $employee->assignRole($request->validated("roleId"));
+        $employee->assignRole(Role::find($request->validated("roleId"))->name);
         return response()->json([
             "message" => "role assigned successfully"
         ], 200);

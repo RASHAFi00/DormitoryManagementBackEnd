@@ -14,6 +14,9 @@ class EmployeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $unit = $this->whenLoaded("unit" , null , "N/A");
+        $roles = $this->whenLoaded("roles" , null , "N/A");
+
         // return parent::toArray($request);
         return [
             "id" => $this->id,
@@ -26,11 +29,9 @@ class EmployeeResource extends JsonResource
             "specialization" => $this->specialization,
             "leaveDate" => $this->leave_date,
 
-            // "unit" => UnitResource::make(Unit::find($this->unit_id)),
-            "unit" => $this->unit ? UnitResource::make($this->load("unit")->unit->flatMap) : null,
+            "unit" => $unit ? UnitResource::make($unit) : null,
 
-            // "roles" => RoleResource::collection($this->role),
-            "roles" => $this->role ? RoleResource::collection($this->load("role")->role) : null,
+            "roles" => $roles ? RoleResource::collection($roles) : null,
 
             "createdAt" => $this->created_at
         ];
