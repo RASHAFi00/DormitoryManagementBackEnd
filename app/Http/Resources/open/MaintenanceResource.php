@@ -21,14 +21,16 @@ class MaintenanceResource extends JsonResource
         // return parent::toArray($request);
         $unit = Unit::find($this->unit_id);
         $room = Room::find($this->room_id);
-        $unitManager = $unit->load("employee")->where("unit_id" , $unit->id);
-        $treasury = $this->load("treasury");
+        $unitManager = $unit->load("employee")->employee->filter(function($emp) {
+            return $emp->load("roles")->roles->first()->name === "mentor";
+        });
+        $treasury = $this->load("treasury")->treasury;
 
         return [
             "id" => $this->id,
             "unit" => UnitResource::make($unit),
             "room" => RoomResource::make($room),
-            "unitManager" => EmployeeResource::make($unitManager),
+            "unitManager" => EmployeeResource::make($unitManager->first()),
             "treasury" => $treasury ? TreasuryResource::make($treasury) : null,
             "status" => $this->status,
             "totalCost" => $this->total_cost,
