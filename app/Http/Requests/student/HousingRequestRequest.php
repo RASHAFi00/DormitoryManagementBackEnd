@@ -23,7 +23,7 @@ class HousingRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "brothers" => ["required" , "boolean" , Rule::in([true , false])],
+            "brothers" => ["nullable" , "boolean"],
             "student2" => ["nullable" , Rule::exists("students" ,"identification_code")],
             "student3" => ["nullable" , Rule::exists("students" ,"identification_code")],
             "student4" => ["nullable" , Rule::exists("students" ,"identification_code")],

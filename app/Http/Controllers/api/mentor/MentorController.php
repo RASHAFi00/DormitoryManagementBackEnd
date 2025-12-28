@@ -49,7 +49,11 @@ class MentorController extends Controller
     }
 
     public function sendFeeRequest(FeeRequest $request) {
-        Fee::query()->create($request->validated());
+        Fee::query()->create([
+            "student_id" => $request->validated("studentId"),
+            "type" => $request->validated("type"),
+            "cost" => $request->validated("cost")
+        ]);
 
         return response()->json([
             "message" => "fee request sent succesfully"

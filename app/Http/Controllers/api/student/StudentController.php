@@ -14,7 +14,7 @@ use App\Services\VerifyRelationService;
 use App\Services\VerifyHousingRequestService;
 
 use App\Http\Resources\open\HousingRequestResource;
-
+use Illuminate\Queue\Middleware\Skip;
 
 class StudentController extends Controller
 {
@@ -43,13 +43,13 @@ class StudentController extends Controller
 
     public function cancleRoommateRelation(HousingRequest $housingRequest , Request $request) {
         $student = $request->user("student")->id;
-        if($housingRequest->student_2_id == $student){
+        if(Student::find($housingRequest->student2 , "identification_code") == $student){
             $housingRequest->student_2_id = null;
             $housingRequest->save();
-        } else if($housingRequest->student_3_id == $student){
+        } else if(Student::find($housingRequest->student3 , "identification_code") == $student){
             $housingRequest->student_2_id = null;
             $housingRequest->save();
-        } else if($housingRequest->student_4_id == $student){
+        } else if(Student::find($housingRequest->student4 , "identification_code") == $student){
             $housingRequest->student_3_id = null;
             $housingRequest->save();
         } else{
@@ -63,22 +63,31 @@ class StudentController extends Controller
         ] ,200);
     }
 
-    public function sendHousingRequest(HousingRequestRequest $hRequest , Request $request) {
-        $exists = $request->user("student")->housingRequest1()->housingRequest1;
+    public function sendHousingRequest(HousingRequestRequest $hRequest) {
+        $exists = $hRequest->user("student")->load("housingRequest1")->housingRequest1;
         if ($exists) {
             return response()->json(["message" => "student already have housing request in queue"], 422);
         }
 
-        if(in_array($request->validated("student1") , [$request->validated("student2") , $request->validated("student3") , $request->validated("student4")])){
+        if(in_array($hRequest->user("student")->identification_code , [$hRequest->validated("student2") , $hRequest->validated("student3") , $hRequest->validated("student4")   ])){
             return response()->json([
                 "message" => "student is referenced as a roommate in the same request"
             ] , 422);
         }
 
         $validated = $hRequest->validated();
+        $studentsData = [];
         $students = [];
-        foreach ($validated["students"] as $std)
-            $students[] = Student::find($std , "identification_code");
+
+        $studentsData[] = $validated["student2"] ?? null;
+        $studentsData[] = $validated["student3"] ?? null;
+        $studentsData[] = $validated["student4"] ?? null;
+        foreach ($studentsData as $std){
+            if($std){
+                $students[] = Student::where("identification_code" , $std)->first();
+            }
+        }
+
 
         // $existsArray = VerifyHousingRequestService::inQueue($students);
 
@@ -103,7 +112,7 @@ class StudentController extends Controller
             $array = [];
             return response()->json([
                 "message" => "duplicate roommate reference",
-                "info" => collect($oneRelationArray)->map(function ($valid , $student){
+                "info" => collect($oneRelationArray)->map(function ($valid , $student) use (&$array){
                     if(! $valid){
                         $ID = Student::find($student)->identification;
                         $array[] = $ID;
@@ -115,17 +124,16 @@ class StudentController extends Controller
         }
 
         HousingRequest::create([
-            "brothers" => $validated["brothers"],
-            "student_1_id" => $request->user("student")->id,
-            "student_2_id" => $validated["student2"],
-            "student_3_id" => $validated["student3"],
-            "student_4_id" => $validated["student4"]
+            "brothers" => $validated["brothers"] ?? false,
+            "student_1_id" => $hRequest->user("student")->id,
+            "student_2_id" => $students[0]->id ?? null,
+            "student_3_id" => $students[1]->id ?? null,
+            "student_4_id" => $students[2]->id ?? null
         ]);
 
         return response()->json([
             "message" => "successfully signed housing request"
         ] , 200);
-
 
     }
 }

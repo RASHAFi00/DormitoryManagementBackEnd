@@ -14,10 +14,10 @@ class PaymentCodeService
         do {
             $code = '';
             for ($i = 0; $i < $length; $i++) {
+                $code.= $characters[rand(0, strlen($characters) - 1)];
+
                 if(strlen($code) % 4 == 0)
                     $code .= '-';
-
-                $code.= $characters[rand(0, strlen($characters) - 1)];
             }
         } while (Fee::where('process_number', $code)->exists());
 

@@ -20,7 +20,7 @@ class Fee extends Model
         parent::boot();
         static::creating( function ($fee) {
             if(empty($fee->process_number)){
-                $fee->process_number = PaymentCodeService::generateProcessNumber(8);
+                $fee->process_number = PaymentCodeService::generateProcessNumber(16);
             }
         } );
     }

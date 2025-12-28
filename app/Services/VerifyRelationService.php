@@ -14,11 +14,11 @@ class VerifyRelationService
         foreach($student as $std){
 
             assert($std instanceof Student);
-            $std->housingRequest2 ? $records[$std->id] = false : $records[$std->id] = true;
+            $std->load("housingRequest2")->housingRequest2 ? $records[$std->id] = false : $records[$std->id] = true;
 
-            $std->housingRequest3 ? $records[$std->id] = false : $records[$std->id] = true;
+            $std->load("housingRequest3")->housingRequest3 ? $records[$std->id] = false : $records[$std->id] = true;
 
-            $std->housingRequest4 ? $records[$std->id] = false : $records[$std->id] = true;
+            $std->load("housingRequest4")->housingRequest4 ? $records[$std->id] = false : $records[$std->id] = true;
         }
 
         return $records;
